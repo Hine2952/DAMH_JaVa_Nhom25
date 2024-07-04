@@ -1,6 +1,5 @@
 package com.example.ChatWeb.controller;
 
-import com.example.ChatWeb.config.TokenProvider;
 import com.example.ChatWeb.exception.UserException;
 import com.example.ChatWeb.model.User;
 import com.example.ChatWeb.request.UpdateUserRequest;
@@ -16,30 +15,24 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private UserService userService;
-    private TokenProvider tokenProvider;
-
-    public UserController(UserService userService, TokenProvider tokenProvider) {
+    public UserController(UserService userService){
         this.userService=userService;
-        this.tokenProvider=tokenProvider;
     }
-
     @GetMapping("/profile")
-    public ResponseEntity<User> getUserProfileHandler (@RequestHeader("Authorization") String token) throws UserException {
-            User user = userService.findUserProfile(token);
-            return new ResponseEntity<User>(user, HttpStatus.ACCEPTED) ;
+    public ResponseEntity<User> getUserProfileHandle(@RequestHeader("Authorization")String token) throws UserException {
+        User user = userService.findUserProfile(token);
+        return new ResponseEntity<User>(user,HttpStatus.ACCEPTED);
     }
-
-    @GetMapping ("/{query}")
-    public ResponseEntity<List<User>> searchUserHandler(@PathVariable("query") String q){
-        List<User> users=userService.searchUser(q);
-        return new ResponseEntity<List<User>> (users, HttpStatus.OK);
+    @GetMapping("/{query}")
+    public ResponseEntity<List<User>> searchUserHandle(@PathVariable("query")String q) {
+        List<User> user = userService.searchUser(q);
+        return new ResponseEntity<List<User>>(user,HttpStatus.OK);
     }
-
     @PutMapping("/update")
-    public ResponseEntity<ApiResponse>updateUeserHandler(@RequestBody UpdateUserRequest req, @RequestHeader ("Authorization") String token) throws UserException {
+    public ResponseEntity<ApiResponse> updateUserHandle(@RequestBody UpdateUserRequest req, @RequestHeader("Authorization")String token) throws UserException {
         User user = userService.findUserProfile(token);
         userService.updateUser(user.getId(),req);
-        ApiResponse res = new ApiResponse("user update successfully", true);
-        return new ResponseEntity<ApiResponse>(res, HttpStatus.ACCEPTED);
+        ApiResponse res = new ApiResponse("User Update successfully", true);
+        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
     }
 }

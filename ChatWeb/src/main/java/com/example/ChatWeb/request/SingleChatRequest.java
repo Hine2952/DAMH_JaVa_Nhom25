@@ -1,13 +1,20 @@
 package com.example.ChatWeb.request;
 
-import lombok.*;
-
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Builder
 public class SingleChatRequest {
-    private Integer userld;
+    private Integer userId;
+
+    public SingleChatRequest() {
+    }
+
+    public SingleChatRequest(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 }

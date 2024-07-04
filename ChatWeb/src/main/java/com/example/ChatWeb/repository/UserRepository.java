@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByEmail(String email);
-    @Query("select u from User u where u.fullname Like %:query% or u.email Like %:query%")
-    public List<User>searchUser(@Param("query") String query);
+    @Query("SELECT u FROM User u WHERE u.full_name LIKE %:query% or u.email LIKE %:query%")
+    public List<User> searchUsers (@Param("query")String query);
 }
