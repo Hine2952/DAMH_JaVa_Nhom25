@@ -31,7 +31,8 @@ public class ChatServiceImplementation implements ChatService{
         chat.getUsers().add(user);
         chat.getUsers().add(reqUser);
         chat.setGroup(false);
-        return chat;
+
+        return chatRepository.save(chat);
     }
 
     @Override

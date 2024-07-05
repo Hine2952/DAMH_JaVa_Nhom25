@@ -32,6 +32,7 @@ public class MessageServiceImplementation implements MessageService{
         message.setUser(user);
         message.setContent(req.getContent());
         message.setTimestamp(LocalDateTime.now());
+        messageRepository.save(message);
         return message;
     }
 
@@ -39,10 +40,10 @@ public class MessageServiceImplementation implements MessageService{
     public List<Message> getChatMessage(Integer chatId, User reqUser) throws ChatException, UserException {
         Chat chat = chatService.findChatById(chatId);
         if (!chat.getUsers().contains(reqUser)){
-            throw new UserException("You are not rsleted to this chat " + chat.getId());
+            throw new UserException("You are not related to this chat " + chat.getId());
         }
         List<Message> messages=messageRepository.findByChatId(chat.getId());
-        return List.of();
+        return messages;
     }
 
     @Override
